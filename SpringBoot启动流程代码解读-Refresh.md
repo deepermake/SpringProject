@@ -1,6 +1,6 @@
 ### refresh()主要功能
     在Spring容器创建后，调用refresh()方法刷新Spring应用的上下文
-###refresh()主要代码流程解读
+### refresh()主要代码流程解读
 ```java
 @Override
 public void refresh() throws BeansException, IllegalStateException {
@@ -11,13 +11,16 @@ public void refresh() throws BeansException, IllegalStateException {
         prepareRefresh();
 
         // Tell the subclass to refresh the internal bean factory.
+        // 获取刷新的beanFactory,检查是否存在beanFactory，存在则销毁然后创建一个，加载beanFactory定义
         ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
         // Prepare the bean factory for use in this context.
+        // 对beanFactory做一些预处理
         prepareBeanFactory(beanFactory);
 
         try {
             // Allows post-processing of the bean factory in context subclasses.
+            // beanFactory的前置处理
             postProcessBeanFactory(beanFactory);
 
             StartupStep beanPostProcess = this.applicationStartup.start("spring.context.beans.post-process");
@@ -29,6 +32,7 @@ public void refresh() throws BeansException, IllegalStateException {
             beanPostProcess.end();
 
             // Initialize message source for this context.
+            // 初始化
             initMessageSource();
 
             // Initialize event multicaster for this context.
